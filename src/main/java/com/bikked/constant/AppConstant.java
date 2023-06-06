@@ -9,4 +9,6 @@ public class AppConstant {
 
     public static final String UserEmail1 = "UserEmail";
 
+    public static final String UserEmai2 = "UserEmail";
+
 }
