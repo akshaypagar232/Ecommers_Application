@@ -53,5 +53,5 @@ public class DataMaskingPatternLayout extends PatternLayout {
         }
         return sb.toString();
     }
-
 }
+
