@@ -7,4 +7,6 @@ public class AppConstant {
     public static final String UserId = "UserId";
     public static final String UserEmail = "UserEmail";
 
+    public static final String UserEmail1 = "UserEmail";
+
 }
