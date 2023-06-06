@@ -6,6 +6,6 @@ public class AppConstant {
     public static final String User = "User";
     public static final String UserId = "UserId";
     public static final String UserEmail = "UserEmail";
-    public static final String UserEmail111 = "UserEmail111";
+    public static final String UserEmail22 = "UserEmail22";
 
 }
