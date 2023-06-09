@@ -1,5 +1,6 @@
 package com.bikked.dto;
 
+import com.bikked.validate.ImageNameValid;
 import lombok.*;
 
 import javax.validation.constraints.*;
@@ -18,6 +19,7 @@ public class UserDto {
     private String name;
 
     @Email(message = "email must be proper format")
+    @NotEmpty(message = "Email is empty")
     private String email;
 
     @NotEmpty
@@ -30,7 +32,8 @@ public class UserDto {
     @NotNull(message = "about field is empty !!")
     private String about;
 
-    @NotBlank(message = "image is empty")
+    //custom validator
+    @ImageNameValid
     private String imageName;
 
 }
