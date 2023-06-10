@@ -1,5 +1,6 @@
 package com.bikked.service;
 
+import com.bikked.dto.PageableResponse;
 import com.bikked.dto.UserDto;
 
 import java.util.List;
@@ -12,7 +13,7 @@ public interface UserService {
 
     void deleteUser(String userId);
 
-    List<UserDto> getAllUser();
+    PageableResponse<UserDto> getAllUser(int pageNumber, int pageSize , String sortBy, String sortDirection);
 
     UserDto getUserById(String userId);
 

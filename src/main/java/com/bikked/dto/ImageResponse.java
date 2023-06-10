@@ -1,4 +1,4 @@
-package com.bikked.exceptions;
+package com.bikked.dto;
 
 import lombok.*;
 import org.springframework.http.HttpStatus;
@@ -8,7 +8,9 @@ import org.springframework.http.HttpStatus;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class ApiResponseMessage {
+public class ImageResponse {
+
+    private String imageName;
 
     private String message;
 

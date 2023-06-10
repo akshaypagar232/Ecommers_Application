@@ -1,20 +1,23 @@
 package com.bikked.service.impl;
 
 import com.bikked.constant.AppConstant;
+import com.bikked.dto.PageableResponse;
 import com.bikked.dto.UserDto;
 import com.bikked.entity.User;
 import com.bikked.exceptions.ResourceNotFoundException;
+import com.bikked.helper.Helper;
 import com.bikked.repository.UserRepository;
 import com.bikked.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -87,17 +90,21 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<UserDto> getAllUser() {
+    public PageableResponse<UserDto> getAllUser(int pageNumber, int pageSize , String sortBy, String sortDirection) {
+
+        Sort sort = (sortDirection.equalsIgnoreCase("desc"))?(Sort.by(sortBy).descending()):(Sort.by(sortBy).ascending());
+
+        Pageable pageable = PageRequest.of(pageNumber, pageSize,sort);
 
         log.info("Initiated request for get all User details in database");
 
-        List<User> all = userRepository.findAll();
-
-        List<UserDto> userDtos = all.stream().map((i) -> mapper.map(i, UserDto.class)).collect(Collectors.toList());
+        Page<User> page = userRepository.findAll(pageable);
 
         log.info("Completed request for get all User details in database");
 
-        return userDtos;
+        PageableResponse<UserDto> response = Helper.getPagableResponse(page, UserDto.class);
+
+        return response;
     }
 
     @Override
