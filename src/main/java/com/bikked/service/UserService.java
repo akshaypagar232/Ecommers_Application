@@ -9,11 +9,11 @@ public interface UserService {
 
     UserDto createUser(UserDto userDto);
 
-    UserDto updateUser(UserDto userDto,String userId);
+    UserDto updateUser(UserDto userDto, String userId);
 
     void deleteUser(String userId);
 
-    PageableResponse<UserDto> getAllUser(int pageNumber, int pageSize , String sortBy, String sortDirection);
+    PageableResponse<UserDto> getAllUser(int pageNumber, int pageSize, String sortBy, String sortDirection);
 
     UserDto getUserById(String userId);
 
