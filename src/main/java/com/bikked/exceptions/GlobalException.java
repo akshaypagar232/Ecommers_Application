@@ -15,7 +15,6 @@ import java.util.Map;
 @RestControllerAdvice
 public class GlobalException {
 
-
     @ExceptionHandler(ResourceNotFoundException.class)
     public ResponseEntity<ApiResponseMessage> resourceNotFoundException(ResourceNotFoundException resource) {
 
