@@ -8,6 +8,7 @@ public class AppConstant {
     public static final String UserEmail = "UserEmail";
     public static final String Category = "Category";
     public static final String CategoryId = "CategoryId";
+    public static final String Category_Delete = "Category delete successfully";
 
 
 }
