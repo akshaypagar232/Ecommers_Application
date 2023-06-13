@@ -82,7 +82,6 @@ public class CategoryServiceImpl implements CategoryService {
 
         log.info("Completed request for delete the category details in database with categoryId:{}", categoryId);
 
-
     }
 
     @Override
