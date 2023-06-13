@@ -9,6 +9,7 @@ import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
@@ -18,7 +19,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @ToString
 @MappedSuperclass              //or @Embeddable & @Embedded
-public class BaseEntity {
+public class BaseEntity implements Serializable {
 
     @Column(name = "is_active")
     private String isActive;
