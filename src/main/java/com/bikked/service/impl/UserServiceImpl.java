@@ -8,18 +8,27 @@ import com.bikked.exceptions.ResourceNotFoundException;
 import com.bikked.helper.Helper;
 import com.bikked.repository.UserRepository;
 import com.bikked.service.UserService;
+
 import lombok.extern.slf4j.Slf4j;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.NoSuchFileException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
+
 
 @Slf4j
 @Service
@@ -31,11 +40,13 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private ModelMapper mapper;
 
+    @Value("${user.profile.image.path}")
+    private String imagePath;
+
     @Override
     public UserDto createUser(UserDto userDto) {
 
         log.info("Initiated request for save the User details in database");
-
 
         String userId = UUID.randomUUID().toString();
 
@@ -83,6 +94,19 @@ public class UserServiceImpl implements UserService {
 
         User user = userRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException(AppConstant.User, AppConstant.UserId, userId));
 
+        String fullPath = imagePath + user.getImageName();
+
+        try {
+            Path path = Paths.get(fullPath);
+            Files.delete(path);
+        } catch (NoSuchFileException ex) {
+            log.info("user image not found in folder");
+            ex.printStackTrace();
+        }catch (IOException e){
+            throw new RuntimeException(e);
+        }
+
+
         userRepository.delete(user);
 
         log.info("Completed request for delete the User details in database with userId:{}", userId);
@@ -90,11 +114,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public PageableResponse<UserDto> getAllUser(int pageNumber, int pageSize , String sortBy, String sortDirection) {
+    public PageableResponse<UserDto> getAllUser(int pageNumber, int pageSize, String sortBy, String sortDirection) {
 
-        Sort sort = (sortDirection.equalsIgnoreCase("desc"))?(Sort.by(sortBy).descending()):(Sort.by(sortBy).ascending());
+        Sort sort = (sortDirection.equalsIgnoreCase("desc")) ? (Sort.by(sortBy).descending()) : (Sort.by(sortBy).ascending());
 
-        Pageable pageable = PageRequest.of(pageNumber, pageSize,sort);
+        Pageable pageable = PageRequest.of(pageNumber, pageSize, sort);
 
         log.info("Initiated request for get all User details in database");
 

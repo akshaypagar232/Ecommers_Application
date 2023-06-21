@@ -9,6 +9,7 @@ public class AppConstant {
     public static final String Category = "Category";
     public static final String CategoryId = "CategoryId";
     public static final String Category_Delete = "Category delete successfully";
+    public static final String Product = "ProductId not found in database";
 
 
 }

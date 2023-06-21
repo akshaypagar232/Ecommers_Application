@@ -18,7 +18,7 @@ public class GlobalException {
     @ExceptionHandler(ResourceNotFoundException.class)
     public ResponseEntity<ApiResponseMessage> resourceNotFoundException(ResourceNotFoundException resource) {
 
-        log.info("Initiated request for Resource Not Found Exception give parameter can not be match ! !");
+        log.error("Initiated request for Resource Not Found Exception give parameter can not be match ! !");
 
         ApiResponseMessage message = ApiResponseMessage
                 .builder()
@@ -27,7 +27,7 @@ public class GlobalException {
                 .success(HttpStatus.NOT_FOUND)
                 .build();
 
-        log.info("Completed request for Resource Not Found Exception ! !");
+        log.error("Completed request for Resource Not Found Exception ! !");
 
         return new ResponseEntity<ApiResponseMessage>(message, HttpStatus.NOT_FOUND);
 
@@ -36,7 +36,7 @@ public class GlobalException {
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<Map<String, String>> MethodArgumentNotValidException(MethodArgumentNotValidException ex) {
 
-        log.info("Initiated request for Method Argument Not Valid Exception give parameter can not be fill requirement ! !");
+        log.error("Initiated request for Method Argument Not Valid Exception give parameter can not be fill requirement ! !");
 
         Map<String, String> map = new HashMap<>();
 
@@ -49,7 +49,7 @@ public class GlobalException {
 
         });
 
-        log.info("Completed request for Method Argument Not Valid Exception ! !");
+        log.error("Completed request for Method Argument Not Valid Exception ! !");
 
         return new ResponseEntity<Map<String, String>>(map, HttpStatus.BAD_REQUEST);
 
@@ -58,7 +58,7 @@ public class GlobalException {
     @ExceptionHandler(BadApiRequest.class)
     public ResponseEntity<ApiResponseMessage> resourceNotFoundException(BadApiRequest ex) {
 
-        log.info("Bad Api Request ! !");
+        log.error("Bad Api Request ! !");
 
         ApiResponseMessage message = ApiResponseMessage
                 .builder()
@@ -67,7 +67,7 @@ public class GlobalException {
                 .success(HttpStatus.BAD_REQUEST)
                 .build();
 
-        log.info("Completed request for Resource Not Found Exception ! !");
+        log.error("Completed request for Resource Not Found Exception ! !");
 
         return new ResponseEntity<ApiResponseMessage>(message, HttpStatus.BAD_REQUEST);
 

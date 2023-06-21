@@ -5,10 +5,8 @@ import com.bikked.dto.ImageResponse;
 import com.bikked.dto.PageableResponse;
 import com.bikked.dto.UserDto;
 import com.bikked.exceptions.ApiResponseMessage;
-import com.bikked.exceptions.ResourceNotFoundException;
 import com.bikked.service.FileService;
 import com.bikked.service.UserService;
-import com.bikked.service.impl.UserServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -21,14 +19,13 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
 @Slf4j
-@RequestMapping("/user")
 @RestController
+@RequestMapping("/user")
 public class UserController {
 
     @Autowired
@@ -46,7 +43,7 @@ public class UserController {
      * @author Akshay
      * @apiNote save User details
      */
-    @PostMapping
+    @PostMapping()
     public ResponseEntity<UserDto> createUser(@Valid @RequestBody UserDto userDto) {
 
         log.info("Initiated request pass service for save the User details");
@@ -233,7 +230,7 @@ public class UserController {
 
         StreamUtils.copy(resource, response.getOutputStream());
 
-        log.info("Completed request for serve User image details with userId : {}", userId);
+        log.info("Completed request for serve user image details with userId : {}", userId);
 
     }
 

@@ -15,7 +15,7 @@ public class CategoryDto {
     private String categoryId;
 
     @NotEmpty()
-    @Size(min = 5,max = 10,message = "title must be min :5 and max:10")
+    @Size(max = 50,message = "title must be max:10")
     private String title;
 
     @NotEmpty(message = "description is empty")
@@ -23,6 +23,5 @@ public class CategoryDto {
 
     @NotEmpty(message = "cover image is empty")
     private String coverImage;
-
 
 }

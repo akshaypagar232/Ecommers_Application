@@ -8,16 +8,26 @@ import com.bikked.exceptions.ResourceNotFoundException;
 import com.bikked.helper.Helper;
 import com.bikked.repository.CategoryRepository;
 import com.bikked.service.CategoryService;
+
 import lombok.extern.slf4j.Slf4j;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.NoSuchFileException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -28,6 +38,9 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Autowired
     private ModelMapper mapper;
+
+    @Value("${category.image.path}")
+    private String imagePath;
 
     @Override
     public CategoryDto createCategory(CategoryDto categoryDto) {
@@ -78,6 +91,18 @@ public class CategoryServiceImpl implements CategoryService {
 
         Category category = categoryRepository.findById(categoryId).orElseThrow(() -> new ResourceNotFoundException(AppConstant.Category, AppConstant.CategoryId, categoryId));
 
+        String image = imagePath + category.getCoverImage();
+
+        try {
+            Path path = Paths.get(image);
+            Files.delete(path);
+        } catch (NoSuchFileException ex) {
+            log.info("user image not found in folder");
+            ex.printStackTrace();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
         categoryRepository.delete(category);
 
         log.info("Completed request for delete the category details in database with categoryId:{}", categoryId);
@@ -112,6 +137,34 @@ public class CategoryServiceImpl implements CategoryService {
         CategoryDto categoryDto = mapper.map(category, CategoryDto.class);
 
         log.info("Completed request category details in database with categoryId:{}", categoryId);
+
+        return categoryDto;
+    }
+
+    @Override
+    public List<CategoryDto> searchCategory(String keyword) {
+
+        log.info("Initiated request for get category by using search keyword in category details in database with keyword:{}", keyword);
+
+        List<Category> list = categoryRepository.findByTitleContaining(keyword);
+
+        List<CategoryDto> categoryDtos = list.stream().map((i) -> mapper.map(i, CategoryDto.class)).collect(Collectors.toList());
+
+        log.info("Completed request for get category by using search keyword in category details in database with keyword:{}", keyword);
+
+        return categoryDtos;
+    }
+
+    @Override
+    public CategoryDto getCategoryByTitle(String title) {
+
+        log.info("Initiated request for get category by using search title in category details in database with title : {}", title);
+
+        Category category = categoryRepository.findByTitle(title);
+
+        CategoryDto categoryDto = mapper.map(category, CategoryDto.class);
+
+        log.info("Completed request for get category by using search keyword in category details in database with title : {}", title);
 
         return categoryDto;
     }

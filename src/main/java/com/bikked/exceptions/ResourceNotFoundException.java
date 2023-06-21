@@ -9,8 +9,8 @@ import lombok.Setter;
 @Builder
 public class ResourceNotFoundException extends RuntimeException {
 
-    String resourcename;
-
+    String resourcename;    
+ 
     String fieldname;
 
     String fieldvalue;
