@@ -67,7 +67,7 @@ public class CategoryServiceImpl implements CategoryService {
 
         log.info("Initiated request for update the category details in database with categoryId : {}", categoryId);
 
-        Category category = categoryRepository.findById(categoryId).orElseThrow(() -> new ResourceNotFoundException(AppConstant.Category, AppConstant.CategoryId, categoryId));
+        Category category = categoryRepository.findById(categoryId).orElseThrow(() -> new ResourceNotFoundException(AppConstant.CATEGORY_ID));
 
         Category category1 = mapper.map(categoryDto, Category.class);
 
@@ -89,7 +89,7 @@ public class CategoryServiceImpl implements CategoryService {
 
         log.info("Initiated request for delete the category details in database with categoryId : {}", categoryId);
 
-        Category category = categoryRepository.findById(categoryId).orElseThrow(() -> new ResourceNotFoundException(AppConstant.Category, AppConstant.CategoryId, categoryId));
+        Category category = categoryRepository.findById(categoryId).orElseThrow(() -> new ResourceNotFoundException(AppConstant.CATEGORY_ID));
 
         String image = imagePath + category.getCoverImage();
 
@@ -106,23 +106,22 @@ public class CategoryServiceImpl implements CategoryService {
         categoryRepository.delete(category);
 
         log.info("Completed request for delete the category details in database with categoryId:{}", categoryId);
-
     }
 
     @Override
     public PageableResponse<CategoryDto> getAllCategory(int pageNumber, int pageSize, String sortBy, String sortDirection) {
 
+        log.info("Initiated request for getAllCategory the category details in database");
+
         Sort sort = (sortDirection.equalsIgnoreCase("desc")) ? (Sort.by(sortBy).descending()) : (Sort.by(sortBy).ascending());
 
         Pageable pageable = PageRequest.of(pageNumber, pageSize, sort);
 
-        log.info("Initiated request for get all Category details in database");
-
         Page<Category> page = categoryRepository.findAll(pageable);
 
-        log.info("Completed request for get all Category details in database");
-
         PageableResponse<CategoryDto> response = Helper.getPagableResponse(page, CategoryDto.class);
+
+        log.info("Completed request for getAllCategory the category details in database");
 
         return response;
     }
@@ -132,7 +131,7 @@ public class CategoryServiceImpl implements CategoryService {
 
         log.info("Initiated request for get category By Id category details in database with categoryId:{}", categoryId);
 
-        Category category = categoryRepository.findById(categoryId).orElseThrow(() -> new ResourceNotFoundException(AppConstant.Category, AppConstant.CategoryId, categoryId));
+        Category category = categoryRepository.findById(categoryId).orElseThrow(() -> new ResourceNotFoundException(AppConstant.CATEGORY_ID));
 
         CategoryDto categoryDto = mapper.map(category, CategoryDto.class);
 
@@ -168,6 +167,4 @@ public class CategoryServiceImpl implements CategoryService {
 
         return categoryDto;
     }
-
-
 }
