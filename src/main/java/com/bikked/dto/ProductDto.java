@@ -1,5 +1,6 @@
 package com.bikked.dto;
 
+import com.bikked.entity.Category;
 import lombok.*;
 
 import javax.validation.constraints.NotEmpty;
@@ -31,6 +32,9 @@ public class ProductDto {
     private boolean live;
     @NotEmpty
     private boolean stock;
+    @NotEmpty
+    private String imageProduct;
+    private CategoryDto categoryDto;
 
 }
 
