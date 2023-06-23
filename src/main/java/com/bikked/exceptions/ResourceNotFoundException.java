@@ -16,10 +16,12 @@ public class ResourceNotFoundException extends RuntimeException {
     String fieldvalue;
 
     public ResourceNotFoundException() {
+
         super("Resource Not Found !!");
     }
 
     public ResourceNotFoundException(String message) {
+
         super(message);
     }
 
