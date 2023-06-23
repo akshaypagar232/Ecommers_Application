@@ -1,5 +1,6 @@
 package com.bikked.dto;
 
+import com.bikked.entity.Product;
 import lombok.*;
 
 import javax.validation.constraints.NotEmpty;
@@ -23,5 +24,7 @@ public class CategoryDto {
 
     @NotEmpty(message = "cover image is empty")
     private String coverImage;
+
+    private Product product;
 
 }
