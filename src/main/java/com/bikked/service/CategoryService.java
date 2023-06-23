@@ -2,6 +2,9 @@ package com.bikked.service;
 
 import com.bikked.dto.CategoryDto;
 import com.bikked.dto.PageableResponse;
+import com.bikked.dto.UserDto;
+
+import java.util.List;
 
 public interface CategoryService {
 
@@ -15,5 +18,8 @@ public interface CategoryService {
 
     CategoryDto getCategoryById(String categoryId);
 
+    List<CategoryDto> searchCategory(String keyword);
+
+    CategoryDto getCategoryByTitle(String title);
 
 }

@@ -12,27 +12,29 @@ import javax.validation.constraints.*;
 @Getter
 public class UserDto {
 
+    @NotBlank
     private String userId;
 
-    @NotEmpty()
-    @Size(min = 3,max = 10,message = "name must be min :3 and max:10")
+    @NotEmpty
+    @Size(min = 2,max = 10,message = "name must be min :2 and max:10")
     private String name;
 
+    @NotEmpty
     @Email(message = "email must be proper format")
-    @NotEmpty(message = "Email is empty")
     private String email;
 
     @NotEmpty
     @Pattern(regexp = "^[A-Za-z0-9]+$",message ="password must be proper format")
     private String password;
 
-    @NotEmpty(message = "gender is selected")
+    @NotEmpty
     private String gender;
 
-    @NotNull(message = "about field is empty !!")
+    @NotNull
     private String about;
 
     //custom validator
+    @NotEmpty
     @ImageNameValid
     private String imageName;
 
