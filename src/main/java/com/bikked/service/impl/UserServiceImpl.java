@@ -68,7 +68,7 @@ public class UserServiceImpl implements UserService {
 
         log.info("Initiated request for update the User details in database with userId : {}", userId);
 
-        User user = userRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException(AppConstant.User, AppConstant.UserId, userId));
+        User user = userRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException(AppConstant.USER_ID));
 
         User user1 = mapper.map(userDto, User.class);
 
@@ -92,7 +92,7 @@ public class UserServiceImpl implements UserService {
 
         log.info("Initiated request for delete the User details in database with userId : {}", userId);
 
-        User user = userRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException(AppConstant.User, AppConstant.UserId, userId));
+        User user = userRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException(AppConstant.USER_ID));
 
         String fullPath = imagePath + user.getImageName();
 
@@ -102,15 +102,13 @@ public class UserServiceImpl implements UserService {
         } catch (NoSuchFileException ex) {
             log.info("user image not found in folder");
             ex.printStackTrace();
-        }catch (IOException e){
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
 
         userRepository.delete(user);
 
         log.info("Completed request for delete the User details in database with userId:{}", userId);
-
     }
 
     @Override
@@ -136,7 +134,7 @@ public class UserServiceImpl implements UserService {
 
         log.info("Initiated request for get User By Id User details in database with userId:{}", userId);
 
-        User user = userRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException(AppConstant.User, AppConstant.UserId, userId));
+        User user = userRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException(AppConstant.USER_ID));
 
         UserDto userDto = mapper.map(user, UserDto.class);
 
@@ -151,7 +149,7 @@ public class UserServiceImpl implements UserService {
 
         log.info("Initiated request for get User By Email User details in database with email:{}", email);
 
-        User user = userRepository.findByEmail(email).orElseThrow(() -> new ResourceNotFoundException(AppConstant.User, AppConstant.UserEmail, email));
+        User user = userRepository.findByEmail(email).orElseThrow(() -> new ResourceNotFoundException(AppConstant.USER_EMAIL));
 
         UserDto userDto = mapper.map(user, UserDto.class);
 
