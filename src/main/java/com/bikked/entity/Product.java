@@ -2,10 +2,7 @@ package com.bikked.entity;
 
 import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Date;
 
 @Setter
@@ -29,5 +26,8 @@ public class Product {
     private Date addedDate;
     private boolean live;
     private boolean stock;
+    private String imageProduct;
+    @ManyToOne(fetch = FetchType.EAGER)    //EAGER used because when fetch product also fetch category
+    private Category category;
 
 }
