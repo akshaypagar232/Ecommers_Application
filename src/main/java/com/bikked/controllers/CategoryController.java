@@ -4,10 +4,11 @@ import com.bikked.constant.AppConstant;
 import com.bikked.dto.CategoryDto;
 import com.bikked.dto.ImageResponse;
 import com.bikked.dto.PageableResponse;
-import com.bikked.dto.UserDto;
+import com.bikked.dto.ProductDto;
 import com.bikked.exceptions.ApiResponseMessage;
 import com.bikked.service.CategoryService;
 import com.bikked.service.FileService;
+import com.bikked.service.ProductService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -25,7 +26,7 @@ import java.io.InputStream;
 import java.util.List;
 
 @Slf4j
-@RestController()
+@RestController
 @RequestMapping("/category")
 public class CategoryController {
 
@@ -34,6 +35,9 @@ public class CategoryController {
 
     @Autowired
     private FileService fileService;
+
+    @Autowired
+    private ProductService productService;
 
     @Value("${category.image.path}")
     private String imageUploadPath;
@@ -76,7 +80,7 @@ public class CategoryController {
 
         ApiResponseMessage apiResponseMessage = ApiResponseMessage
                 .builder()
-                .message(AppConstant.Category_Delete)
+                .message(AppConstant.CATEGORY_DELETE)
                 .status(true)
                 .success(HttpStatus.OK)
                 .build();
@@ -90,7 +94,7 @@ public class CategoryController {
     @GetMapping
     public ResponseEntity<PageableResponse<CategoryDto>> getAllCategory(
             @RequestParam(value = "pageNumber", defaultValue = "0", required = false) int pageNumber,
-            @RequestParam(value = "pageSize", defaultValue = "10", required = false) int pageize,
+            @RequestParam(value = "pageSize", defaultValue = "10", required = false) int pageSize,
             @RequestParam(value = "sortBy", defaultValue = "title", required = false) String sortBy,
             @RequestParam(value = "sortDirection", defaultValue = "asc", required = false) String sortDirection
 
@@ -98,28 +102,28 @@ public class CategoryController {
 
         log.info("Initiated request to controller for get all the category details");
 
-        PageableResponse<CategoryDto> allCategory = categoryService.getAllCategory(pageNumber, pageize, sortBy, sortDirection);
+        PageableResponse<CategoryDto> allCategory = categoryService.getAllCategory(pageNumber, pageSize, sortBy, sortDirection);
 
         log.info("Completed request for get all the category details");
 
-        return new ResponseEntity<PageableResponse<CategoryDto>>(allCategory,HttpStatus.FOUND);
+        return new ResponseEntity<PageableResponse<CategoryDto>>(allCategory, HttpStatus.FOUND);
 
     }
 
     @GetMapping("/{categoryId}")
-    public ResponseEntity<CategoryDto> getCategoryById(@PathVariable String categoryId){
+    public ResponseEntity<CategoryDto> getCategoryById(@PathVariable String categoryId) {
 
-        log.info("Initiated request to controller for get category by Id with categoryId : {}",categoryId);
+        log.info("Initiated request to controller for get category by Id with categoryId : {}", categoryId);
 
         CategoryDto categoryById = categoryService.getCategoryById(categoryId);
 
-        log.info("Completed request to controller for get category by Id with categoryId : {}",categoryId);
+        log.info("Completed request to controller for get category by Id with categoryId : {}", categoryId);
 
-        return new ResponseEntity<CategoryDto>(categoryById,HttpStatus.FOUND);
+        return new ResponseEntity<CategoryDto>(categoryById, HttpStatus.FOUND);
 
     }
 
-    @GetMapping
+    @GetMapping("/search")
     public ResponseEntity<List<CategoryDto>> searchCategory(@RequestParam String title) {
 
         log.info("Initiated request pass service for get category details with title : {}", title);
@@ -191,6 +195,20 @@ public class CategoryController {
 
         log.info("Completed request for serve category image details with categoryId : {}", categoryId);
 
+    }
+
+    @PostMapping("/categoryId")
+    public ResponseEntity<ProductDto> createWithCategory(
+            @PathVariable("categoryId") String categoryId,
+            @Valid @RequestBody ProductDto productDto
+    ) {
+        log.info("Initiated request for create product With CategoryId details with categoryId : {}", categoryId);
+
+        ProductDto productWithCategory = productService.createWithCategory(productDto, categoryId);
+
+        log.info("Completed request for create product With CategoryId details with categoryId : {}", categoryId);
+
+        return new ResponseEntity<>(productWithCategory, HttpStatus.CREATED);
     }
 
 }
