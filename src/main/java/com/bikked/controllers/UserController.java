@@ -93,7 +93,7 @@ public class UserController {
 
         ApiResponseMessage api = ApiResponseMessage
                 .builder()
-                .message(AppConstant.User_Delete)
+                .message(AppConstant.USER_DELETE)
                 .status(true)
                 .success(HttpStatus.OK)
                 .build();
