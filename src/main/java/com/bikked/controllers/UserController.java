@@ -43,7 +43,7 @@ public class UserController {
      * @author Akshay
      * @apiNote save User details
      */
-    @PostMapping()
+    @PostMapping
     public ResponseEntity<UserDto> createUser(@Valid @RequestBody UserDto userDto) {
 
         log.info("Initiated request pass service for save the User details");

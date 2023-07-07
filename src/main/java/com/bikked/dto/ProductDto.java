@@ -13,12 +13,13 @@ import java.util.Date;
 @NoArgsConstructor
 public class ProductDto {
 
-    @NotEmpty
+
     private String productId;
+    private Date addedDate;
     @NotEmpty
+    @Size(max = 100, message = "description must be max : 100")
     private String title;
     @NotEmpty
-    @Size(max = 100,message = "description must be max : 100")
     private String description;
     @NotEmpty
     private long price;
@@ -27,13 +28,12 @@ public class ProductDto {
     @NotEmpty
     private long quantity;
     @NotEmpty
-    private Date addedDate;
-    @NotEmpty
     private boolean live;
     @NotEmpty
     private boolean stock;
     @NotEmpty
     private String imageProduct;
+
     private CategoryDto categoryDto;
 
 }

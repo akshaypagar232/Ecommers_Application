@@ -4,7 +4,6 @@ import com.bikked.constant.AppConstant;
 import com.bikked.dto.ImageResponse;
 import com.bikked.dto.PageableResponse;
 import com.bikked.dto.ProductDto;
-import com.bikked.dto.UserDto;
 import com.bikked.exceptions.ApiResponseMessage;
 import com.bikked.service.FileService;
 import com.bikked.service.ProductService;
@@ -22,7 +21,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.List;
 
 @Slf4j
 @RestController
