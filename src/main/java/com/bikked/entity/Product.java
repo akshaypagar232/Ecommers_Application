@@ -12,6 +12,7 @@ import java.util.Date;
 @ToString
 @Table(name = "products")
 @Entity
+@Builder
 public class Product extends BaseEntity {
 
     @Id
