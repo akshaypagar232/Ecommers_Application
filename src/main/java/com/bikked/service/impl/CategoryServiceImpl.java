@@ -141,17 +141,21 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public List<CategoryDto> searchCategory(String keyword) {
+    public PageableResponse<CategoryDto> searchCategory(String keyword, int pageNumber, int pageSize, String sortBy, String sortDirection) {
 
         log.info("Initiated request for get category by using search keyword in category details in database with keyword:{}", keyword);
 
-        List<Category> list = categoryRepository.findByTitleContaining(keyword);
+        Sort sort = (sortDirection.equalsIgnoreCase("asc")) ? (Sort.by(sortBy).ascending()) : (Sort.by(sortBy).descending());
 
-        List<CategoryDto> categoryDtos = list.stream().map((i) -> mapper.map(i, CategoryDto.class)).collect(Collectors.toList());
+        Pageable pageable = PageRequest.of(pageNumber, pageSize, sort);
+
+        Page<Category> page = categoryRepository.findByTitleContaining(keyword, pageable);
+
+        PageableResponse<CategoryDto> response = Helper.getPagableResponse(page, CategoryDto.class);
 
         log.info("Completed request for get category by using search keyword in category details in database with keyword:{}", keyword);
 
-        return categoryDtos;
+        return response;
     }
 
     @Override
@@ -159,7 +163,7 @@ public class CategoryServiceImpl implements CategoryService {
 
         log.info("Initiated request for get category by using search title in category details in database with title : {}", title);
 
-        Category category = categoryRepository.findByTitle(title);
+        Category category = categoryRepository.findByTitle(title).get();
 
         CategoryDto categoryDto = mapper.map(category, CategoryDto.class);
 
