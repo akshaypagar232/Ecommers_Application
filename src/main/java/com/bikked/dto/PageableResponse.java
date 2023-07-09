@@ -9,6 +9,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@ToString
 public class PageableResponse <V>{
 
     private List<V> content;
