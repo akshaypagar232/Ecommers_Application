@@ -124,15 +124,21 @@ public class CategoryController {
     }
 
     @GetMapping("/search")
-    public ResponseEntity<List<CategoryDto>> searchCategory(@RequestParam String title) {
+    public ResponseEntity<PageableResponse<CategoryDto>> searchCategory(
+            @RequestParam String title,
+            @RequestParam(value = "pageNumber", defaultValue = "0", required = false) int pageNumber,
+            @RequestParam(value = "pageSize", defaultValue = "10", required = false) int pageSize,
+            @RequestParam(value = "sortBy", defaultValue = "title", required = false) String sortBy,
+            @RequestParam(value = "sortDirection", defaultValue = "asc", required = false) String sortDirection
+    ) {
 
         log.info("Initiated request pass service for get category details with title : {}", title);
 
-        List<CategoryDto> categoryDtos = categoryService.searchCategory(title);
+        PageableResponse<CategoryDto> response = categoryService.searchCategory(title, pageNumber, pageSize, sortBy, sortDirection);
 
         log.info("Completed request for get category details with title : {}", title);
 
-        return new ResponseEntity<List<CategoryDto>>(categoryDtos, HttpStatus.FOUND);
+        return new ResponseEntity<PageableResponse<CategoryDto>>(response, HttpStatus.FOUND);
     }
 
     @GetMapping("/{title}")
