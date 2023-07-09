@@ -18,7 +18,7 @@ public interface CategoryService {
 
     CategoryDto getCategoryById(String categoryId);
 
-    List<CategoryDto> searchCategory(String keyword);
+    PageableResponse<CategoryDto> searchCategory(String keyword, int pageNumber, int pageSize, String sortBy, String sortDirection);
 
     CategoryDto getCategoryByTitle(String title);
 
