@@ -125,7 +125,7 @@ public class CategoryController {
 
     @GetMapping("/search")
     public ResponseEntity<PageableResponse<CategoryDto>> searchCategory(
-            @RequestParam String title,
+            @RequestParam(value = "title", defaultValue = "phone", required = false) String title,
             @RequestParam(value = "pageNumber", defaultValue = "0", required = false) int pageNumber,
             @RequestParam(value = "pageSize", defaultValue = "10", required = false) int pageSize,
             @RequestParam(value = "sortBy", defaultValue = "title", required = false) String sortBy,
@@ -141,7 +141,7 @@ public class CategoryController {
         return new ResponseEntity<PageableResponse<CategoryDto>>(response, HttpStatus.FOUND);
     }
 
-    @GetMapping("/{title}")
+    @GetMapping("/title/{title}")
     public ResponseEntity<CategoryDto> getCategoryByTitle(@PathVariable String title) {
 
         log.info("Initiated request pass service for get category details with title : {}", title);
@@ -203,7 +203,7 @@ public class CategoryController {
 
     }
 
-    @PostMapping("/categoryId")
+    @PostMapping("/categoryId/{categoryId}")
     public ResponseEntity<ProductDto> createWithCategory(
             @PathVariable("categoryId") String categoryId,
             @Valid @RequestBody ProductDto productDto
@@ -214,7 +214,7 @@ public class CategoryController {
 
         log.info("Completed request for create product With CategoryId details with categoryId : {}", categoryId);
 
-        return new ResponseEntity<>(productWithCategory, HttpStatus.CREATED);
+        return new ResponseEntity<ProductDto>(productWithCategory, HttpStatus.CREATED);
     }
 
 }
