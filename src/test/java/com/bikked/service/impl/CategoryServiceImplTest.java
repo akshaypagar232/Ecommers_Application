@@ -122,12 +122,16 @@ class CategoryServiceImplTest {
         List<Category> categoryList = Arrays.asList(category1,category2);
         Page<Category> page =new PageImpl<>(categoryList);
         Mockito.when(categoryRepository.findByTitleContaining(Mockito.anyString(),(Pageable) Mockito.any())).thenReturn(page);
-        PageableResponse<CategoryDto> allCategory = categoryService.getAllCategory(0, 4, "title", "asc");
+        PageableResponse<CategoryDto> allCategory = categoryService.searchCategory(keyword,0,4,"title","asc");
         Assertions.assertEquals(2,allCategory.getContent().size());
-
     }
 
     @Test
     void getCategoryByTitleTest() {
+
+        Mockito.when(categoryRepository.findByTitle(Mockito.anyString())).thenReturn(Optional.of(category));
+        CategoryDto categoryDto1 = mapper.map(category, CategoryDto.class);
+        CategoryDto categoryDto = categoryService.getCategoryByTitle(category.getTitle());
+        Assertions.assertEquals(categoryDto.getTitle(),categoryDto1.getTitle());
     }
 }
