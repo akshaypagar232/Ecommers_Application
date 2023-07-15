@@ -99,7 +99,7 @@ public class ProductController {
         return new ResponseEntity<PageableResponse>(allLive, HttpStatus.FOUND);
     }
 
-    @GetMapping("/{productId}")
+    @GetMapping("/id/{productId}")
     ResponseEntity<ProductDto> getProductById(@PathVariable String productId) {
 
         log.info("Initiated request for getProductById the product details with productId : {}", productId);
@@ -109,7 +109,7 @@ public class ProductController {
         return new ResponseEntity<ProductDto>(product, HttpStatus.FOUND);
     }
 
-    @GetMapping("/{title}")
+    @GetMapping("/title/{title}")
     ResponseEntity<PageableResponse<ProductDto>> searchProduct(
             @PathVariable String title,
             @RequestParam(value = "pageNumber", defaultValue = "1", required = false) int pageNumber,
