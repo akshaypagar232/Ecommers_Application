@@ -4,7 +4,6 @@ import com.bikked.constant.AppConstant;
 import com.bikked.dto.ImageResponse;
 import com.bikked.dto.PageableResponse;
 import com.bikked.dto.ProductDto;
-import com.bikked.dto.UserDto;
 import com.bikked.exceptions.ApiResponseMessage;
 import com.bikked.service.FileService;
 import com.bikked.service.ProductService;
@@ -22,7 +21,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.List;
 
 @Slf4j
 @RestController
@@ -101,7 +99,7 @@ public class ProductController {
         return new ResponseEntity<PageableResponse>(allLive, HttpStatus.FOUND);
     }
 
-    @GetMapping("/{productId}")
+    @GetMapping("/id/{productId}")
     ResponseEntity<ProductDto> getProductById(@PathVariable String productId) {
 
         log.info("Initiated request for getProductById the product details with productId : {}", productId);
@@ -111,7 +109,7 @@ public class ProductController {
         return new ResponseEntity<ProductDto>(product, HttpStatus.FOUND);
     }
 
-    @GetMapping("/{title}")
+    @GetMapping("/title/{title}")
     ResponseEntity<PageableResponse<ProductDto>> searchProduct(
             @PathVariable String title,
             @RequestParam(value = "pageNumber", defaultValue = "1", required = false) int pageNumber,

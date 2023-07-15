@@ -43,7 +43,7 @@ public class UserController {
      * @author Akshay
      * @apiNote save User details
      */
-    @PostMapping()
+    @PostMapping
     public ResponseEntity<UserDto> createUser(@Valid @RequestBody UserDto userDto) {
 
         log.info("Initiated request pass service for save the User details");
@@ -133,7 +133,7 @@ public class UserController {
      * @author Akshay
      * @apiNote get user by using userId
      */
-    @GetMapping("/{userId}")
+    @GetMapping("/id/{userId}")
     public ResponseEntity<UserDto> getUserById(@PathVariable String userId) {
 
         log.info("Initiated request pass service for get User details with userId : {}", userId);
@@ -153,7 +153,7 @@ public class UserController {
      * @return
      * @apiNote get user by using userEmail
      */
-    @GetMapping("/{userEmail}")
+    @GetMapping("/email/{userEmail}")
     public ResponseEntity<UserDto> getUserByEmail(@PathVariable String userEmail) {
 
         log.info("Initiated request pass service for get User details with userEmail : {}", userEmail);
