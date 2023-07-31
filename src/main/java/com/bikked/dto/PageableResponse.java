@@ -10,7 +10,7 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 @ToString
-public class PageableResponse <V>{
+public class PageableResponse <V>{           //generic class
 
     private List<V> content;
     private int pageNumber;

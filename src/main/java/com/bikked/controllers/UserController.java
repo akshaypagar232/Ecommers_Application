@@ -115,7 +115,6 @@ public class UserController {
             @RequestParam(value = "pageSize", defaultValue = "2", required = false) int pageSize,
             @RequestParam(value = "sortBy", defaultValue = "name", required = false) String sortBy,
             @RequestParam(value = "sortDirection", defaultValue = "asc", required = false) String sortDirection
-
     ) {
 
         log.info("Initiated request pass service for get all the User details");
